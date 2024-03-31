@@ -1,7 +1,9 @@
-const  path = require('path');
-const  HtmlWebpackPlugin = require('html-webpack-plugin'); 
-const  srcDir = path.resolve(__dirname, './src');
-const  publicDir = path.resolve(__dirname, './public');
+const path = require('path');
+
+const srcDir = path.resolve(__dirname, './src');
+const publicDir = path.resolve(__dirname, './public');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin'); 
 
 module.exports = {
   name: "default-setting", 
@@ -21,7 +23,24 @@ module.exports = {
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
 				use: 'babel-loader'
-			}
+			},
+      {
+        test: /\.css$/i,
+        exclude: /\.module\.css$/i, // 모듈 파일 제외 설정
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.module\.css$/i,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+            },
+          },
+        ],
+      },  
 		]
   },
   plugins: [
